@@ -1,0 +1,38 @@
+{% extends 'template.html' %}
+
+{% block title %}Lista de Tarefas{% endblock %}
+
+{% block content %}
+
+{% if messages %}
+    {% for mensagem in messages %}
+        <div class="alert alert-warning alert-dismissable" role="alert">
+            <button class="close" data-dismiss="alert">
+                <small><sup>x</sup></small>
+            </button>
+            {{ mensagem }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+    {% if todo_item %}
+    <table class="table table-bordered">
+        {% for atributo in todo_item %}
+            {% if atributo.completo %}
+                <tr class="table-secondary">
+                    <td class="striker"><a href="{% url 'edit' atributo.id %}">{{ atributo.item }}</a></td>
+                    <td><center><a href="{% url 'uncross' atributo.id %}">Desfazer</a></center></td>
+                    <td><center><a href="{% url 'delete' atributo.id %}">Deletar</a></center></td>
+                </tr>
+            {% else %}
+            <tr>
+                <td><a href="{% url 'edit' atributo.id %}">{{ atributo.item }}</a></td>
+                <td><center><a href="{% url 'cross_off' atributo.id %}">Riscar</a></center></td>
+                <td><center><a href="{% url 'delete' atributo.id %}">Deletar</a></center></td>
+            </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+    {% endif %}
+
+{% endblock %}
